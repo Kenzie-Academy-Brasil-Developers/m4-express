@@ -5,7 +5,7 @@ const app = express();
 app.use(json());
 
 app.get("/", (req: Request, res: Response) => {    
-    res.send("Leitura realizada com sucesso!");
+    return res.send("Leitura realizada com sucesso!");
 })
 
 app.post("/", (req: Request, res: Response) => {
@@ -13,15 +13,15 @@ app.post("/", (req: Request, res: Response) => {
     //console.log(req.params); - parâmetros de url (url/param)
     //console.log(req.query); - parâmetros de busca (url?param=value)
     console.log(req.headers); // configurações e credenciais de acesso
-    res.send("Criação realizada com sucesso!")
+    return res.status(201).json({ message: "Criação realizada com sucesso!"});
 })
 
 app.put("/", (req: Request, res: Response) => {
-    res.send("Atualização realizada com sucesso!")
+    return res.send("Atualização realizada com sucesso!")
 })
 
 app.delete("/", (req: Request, res: Response) => {
-    res.send("Exclusão realizada com sucesso!")
+    return res.send("Exclusão realizada com sucesso!")
 })
 
 const port = 3000;
