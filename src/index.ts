@@ -4,11 +4,15 @@ const app = express();
 
 app.use(json());
 
-app.get("/", (req: Request, res: Response) => {
+app.get("/", (req: Request, res: Response) => {    
     res.send("Leitura realizada com sucesso!");
 })
 
 app.post("/", (req: Request, res: Response) => {
+    //console.log(req.body); - corpo da requisição
+    //console.log(req.params); - parâmetros de url (url/param)
+    //console.log(req.query); - parâmetros de busca (url?param=value)
+    console.log(req.headers); // configurações e credenciais de acesso
     res.send("Criação realizada com sucesso!")
 })
 
