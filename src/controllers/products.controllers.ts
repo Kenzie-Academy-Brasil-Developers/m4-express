@@ -7,6 +7,12 @@ export class ProductsControllers{
         return res.status(200).json(productsDatabase);
     }
 
+    getOneProduct(req: Request, res: Response): Response{
+        const findProduct = productsDatabase.find(product => product.id === Number(req.params.id));
+
+        return res.status(200).json(findProduct);
+    }
+
     createProduct(req: Request, res: Response): Response{
         const newProduct: IProduct = { id: generateId(), name: req.body.name, price: req.body.price };
         
