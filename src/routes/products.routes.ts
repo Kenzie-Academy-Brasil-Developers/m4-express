@@ -1,12 +1,19 @@
-import { Router } from "express";
-import { ProductsControllers } from "../controllers/products.controllers";
+import { Request, Response, Router } from "express";
 
 export const productsRouter = Router();
 
-const productsControllers = new ProductsControllers();
+productsRouter.get("/", (req: Request, res: Response) => {    
+    return res.send("Leitura realizada com sucesso!");
+})
 
-productsRouter.get("/", productsControllers.getProducts)
+productsRouter.post("/", (req: Request, res: Response) => {
+    return res.status(201).json({ message: "Criação realizada com sucesso!"});
+})
 
-productsRouter.post("/", productsControllers.createProduct)
+productsRouter.put("/", (req: Request, res: Response) => {
+    return res.send("Atualização realizada com sucesso!")
+})
 
-productsRouter.delete("/:id", productsControllers.deleteProduct);
+productsRouter.delete("/", (req: Request, res: Response) => {
+    return res.send("Exclusão realizada com sucesso!")
+})
