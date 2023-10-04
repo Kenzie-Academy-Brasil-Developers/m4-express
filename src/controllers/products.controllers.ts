@@ -1,30 +1,35 @@
 import { Request, Response } from "express";
-import { IProduct } from "../interfaces/products.interfaces";
-import { generateId, productsDatabase } from "../database/database";
+import { ProductsServices } from "../services/products.services";
 
 export class ProductsControllers{
     getProducts(req: Request, res: Response): Response{
-        return res.status(200).json(productsDatabase);
+        const productsService = new ProductsServices();
+
+        const response = productsService.getProducts();
+
+        return res.status(200).json(response);
     }
 
     getOneProduct(req: Request, res: Response): Response{
-        const findProduct = productsDatabase.find(product => product.id === Number(req.params.id));
+        const productsService = new ProductsServices();
 
-        return res.status(200).json(findProduct);
+        const response = productsService.getOneProduct(req.params.id);
+
+        return res.status(200).json(response);
     }
 
     createProduct(req: Request, res: Response): Response{
-        const newProduct: IProduct = { id: generateId(), name: req.body.name, price: req.body.price };
-        
-        productsDatabase.push(newProduct);
+        const productsService = new ProductsServices();
 
-        return res.status(201).json(newProduct);
+        const response = productsService.createProduct(req.body.name, req.body.price);
+
+        return res.status(201).json(response);
     }
 
     deleteProduct(req: Request, res: Response): Response{
-        const index = productsDatabase.findIndex(product => product.id === Number(req.params.id));
-
-        productsDatabase.splice(index, 1);
+        const productsService = new ProductsServices();
+       
+        productsService.deleteProduct(req.params.id);
 
         return res.status(204).json();
     }
