@@ -1,7 +1,8 @@
 import { Router } from "express";
 import { ProductsControllers } from "../controllers/products.controllers";
 import { IsProductIdValid } from "../middlewares/isProductIdValid.middleware";
-import { IsCreateProductBody } from "../middlewares/isCreateProductBodyValid.middleware";
+import { ValidateBody } from "../middlewares/validateBody.middleware";
+import { createProductBodySchema } from "../schemas/createProductBody.schema";
 
 export const productsRouter = Router();
 
@@ -11,6 +12,6 @@ productsRouter.get("/", productsControllers.getProducts);
 
 productsRouter.get("/:id", IsProductIdValid.execute, productsControllers.getOneProduct);
 
-productsRouter.post("/", IsCreateProductBody.execute, productsControllers.createProduct);
+productsRouter.post("/", ValidateBody.execute(createProductBodySchema), productsControllers.createProduct);
 
 productsRouter.delete("/:id", IsProductIdValid.execute, productsControllers.deleteProduct);
