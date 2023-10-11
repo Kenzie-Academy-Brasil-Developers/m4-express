@@ -7,7 +7,7 @@ interface IRequestSchemas {
    query?: AnyZodObject;
 }
 
-export class ValidateBody {
+export class ValidateRequest {
    static execute(schemas: IRequestSchemas) {
       return async (req: Request, res: Response, next: NextFunction) => {
          if (schemas.params) {

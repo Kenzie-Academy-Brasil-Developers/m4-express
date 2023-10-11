@@ -12,8 +12,8 @@ export class ProductsServices{
         return findProduct;
     }
 
-    createProduct(name: string, price: number){
-        const newProduct: IProduct = { id: generateId(), name, price };
+    createProduct(data: Omit<IProduct, 'id'>){
+        const newProduct: IProduct = { id: generateId(), name: data.name, price: data.price };
         
         productsDatabase.push(newProduct);
 
@@ -24,5 +24,17 @@ export class ProductsServices{
         const index = productsDatabase.findIndex(product => product.id === Number(id));
 
         productsDatabase.splice(index, 1);
+    }
+
+    editProduct(id: string, data: Partial<Omit<IProduct, 'id'>>){
+        const product = productsDatabase.find(product => product.id === Number(id)) as IProduct;
+
+        const newProduct = { ...product, ...data};
+
+        const index = productsDatabase.findIndex(product => product.id === Number(id));
+
+        productsDatabase.splice(index, 1, newProduct);
+
+        return newProduct;
     }
 }
