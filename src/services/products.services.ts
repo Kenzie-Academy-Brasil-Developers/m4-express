@@ -1,5 +1,5 @@
 import { generateId, productsDatabase } from "../database/database";
-import { IProduct } from "../interfaces/products.interfaces";
+import { TCreateProductBody, TEditProductBody, TProduct } from "../interfaces/products.interfaces";
 
 export class ProductsServices{
     getProducts(){
@@ -12,8 +12,8 @@ export class ProductsServices{
         return findProduct;
     }
 
-    createProduct(data: Omit<IProduct, 'id'>){
-        const newProduct: IProduct = { id: generateId(), name: data.name, price: data.price };
+    createProduct(data: TCreateProductBody){
+        const newProduct: TProduct = { id: generateId(), name: data.name, price: data.price };
         
         productsDatabase.push(newProduct);
 
@@ -26,8 +26,8 @@ export class ProductsServices{
         productsDatabase.splice(index, 1);
     }
 
-    editProduct(id: string, data: Partial<Omit<IProduct, 'id'>>){
-        const product = productsDatabase.find(product => product.id === Number(id)) as IProduct;
+    editProduct(id: string, data: TEditProductBody){
+        const product = productsDatabase.find(product => product.id === Number(id)) as TProduct;
 
         const newProduct = { ...product, ...data};
 
